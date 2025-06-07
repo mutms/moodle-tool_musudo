@@ -1,4 +1,4 @@
-# Privileged sessions (aka sudo) plugin changelog
+# Changelog
 
 ## mu-4.5.4-10+
 
