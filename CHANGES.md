@@ -4,7 +4,7 @@
 
 Release date: 09/06/2025
 
-* No major changes.
+* Fixed warning in admin settings.
 
 ## mu-4.5.4-10
 
