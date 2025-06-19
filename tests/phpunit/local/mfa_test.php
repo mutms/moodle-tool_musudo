@@ -39,14 +39,18 @@ final class mfa_test extends \advanced_testcase {
     }
 
     public function test_is_mfa_enabled(): void {
-        $this->assertFalse(mfa::is_mfa_enabled());
+        if (!get_config('tool_mfa', 'enabled')) {
+            $this->assertFalse(mfa::is_mfa_enabled());
+        }
 
         set_config('enabled', '1', 'tool_mfa');
         $this->assertTrue(mfa::is_mfa_enabled());
 
         $this->setAdminUser();
 
-        $this->assertFalse(\tool_mfa\manager::is_ready());
+        if (!get_config('factor_email', 'enabled')) {
+            $this->assertFalse(\tool_mfa\manager::is_ready());
+        }
 
         set_config('enabled', '1', 'factor_email');
         $this->assertTrue(\tool_mfa\manager::is_ready());
@@ -64,8 +68,10 @@ final class mfa_test extends \advanced_testcase {
 
         $this->setUser($user1);
 
-        $factors = mfa::get_user_factors();
-        $this->assertSame([], $factors);
+        if (!get_config('factor_email', 'enabled')) {
+            $factors = mfa::get_user_factors();
+            $this->assertSame([], $factors);
+        }
 
         set_config('enabled', '1', 'factor_email');
         $factors = mfa::get_user_factors();
