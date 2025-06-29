@@ -1,10 +1,10 @@
 # Changelog
 
-## mu-4.5.5-01+
+## mu-4.5.5-02
 
-Release date: xx/xx/2025
+Release date: 30/06/2025
 
-* Fixed test compatibility with Moodle 5.0.
+* New plugin versioning.
 
 ## mu-4.5.5-01
 
