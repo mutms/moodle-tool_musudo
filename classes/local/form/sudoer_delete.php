@@ -28,7 +28,6 @@ use tool_musudo\local\sudoer;
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class sudoer_delete extends \tool_mulib\local\dialog_form {
-
     #[\Override]
     protected function definition() {
         $mform = $this->_form;

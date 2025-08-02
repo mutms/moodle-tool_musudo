@@ -30,7 +30,7 @@
 /** @var stdClass $CFG */
 
 require_once('../../../config.php');
-require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 admin_externalpage_setup('tool_musudo_sudoers', '', null, '', ['pagelayout' => 'report', 'nosearch' => true]);
 
@@ -55,7 +55,8 @@ echo $OUTPUT->header();
 
 $report = \core_reportbuilder\system_report_factory::create(
     \tool_musudo\reportbuilder\local\systemreports\sudoers::class,
-    context_system::instance());
+    context_system::instance()
+);
 echo $report->output();
 
 echo $OUTPUT->footer();

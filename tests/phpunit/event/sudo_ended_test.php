@@ -50,8 +50,8 @@ final class sudo_ended_test extends \advanced_testcase {
         $sudoer1 = sudoer::create((object)[
             'userid' => $user1->id,
             'contextid' => [$syscontext->id],
-            'roleid' => [$managerrole->id]],
-        );
+            'roleid' => [$managerrole->id],
+        ]);
         $this->setUser($user1);
         sudoer::start_sudo();
         $sink = $this->redirectEvents();

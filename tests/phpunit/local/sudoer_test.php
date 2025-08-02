@@ -442,7 +442,7 @@ final class sudoer_test extends \advanced_testcase {
         $this->assertCount(1, $items);
         $item = reset($items);
         $this->assertSame('link', $item->itemtype);
-        $this->assertSame('/admin/tool/musudo/sudo_end.php?sesskey='.sesskey(), $item->url->out_as_local_url());
+        $this->assertSame('/admin/tool/musudo/sudo_end.php?sesskey=' . sesskey(), $item->url->out_as_local_url());
     }
 
     public function test_has_capability(): void {

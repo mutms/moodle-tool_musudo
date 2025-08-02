@@ -53,8 +53,8 @@ final class sudoer_created_test extends \advanced_testcase {
         $sudoer1 = sudoer::create((object)[
             'userid' => $user1->id,
             'contextid' => [$syscontext->id],
-            'roleid' => [$managerrole->id]],
-        );
+            'roleid' => [$managerrole->id],
+        ]);
         $events = $sink->get_events();
         $sink->close();
 

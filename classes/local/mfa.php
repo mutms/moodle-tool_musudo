@@ -138,7 +138,8 @@ final class mfa {
             $remattempts = $f->get_remaining_attempts();
             if ($remattempts <= 0) {
                 $a['disable'] = true;
-                $a['loginoption'] = get_string('locked', 'tool_mfa', $a['loginoption']);;
+                $a['loginoption'] = get_string('locked', 'tool_mfa', $a['loginoption']);
+                ;
             }
             $additionalfactors[] = $a;
         }

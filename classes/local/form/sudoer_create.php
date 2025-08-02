@@ -30,7 +30,6 @@ use tool_musudo\local\mfa;
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 final class sudoer_create extends \tool_mulib\local\dialog_form {
-
     #[\Override]
     protected function definition() {
         $mform = $this->_form;
@@ -64,8 +63,17 @@ final class sudoer_create extends \tool_mulib\local\dialog_form {
 
         $repeat[] = $mform->createElement('submit', 'privilege_delete', get_string('privilege_delete', 'tool_musudo'), [], false);
 
-        $this->repeat_elements($repeat, 1, $repeatopts, 'privilege_repeat',
-            'privilege_more', 1, get_string('privilege_more', 'tool_musudo'), false, 'privilege_delete');
+        $this->repeat_elements(
+            $repeat,
+            1,
+            $repeatopts,
+            'privilege_repeat',
+            'privilege_more',
+            1,
+            get_string('privilege_more', 'tool_musudo'),
+            false,
+            'privilege_delete'
+        );
 
         // NOTE: repeat options are not working much when stuff gets deleted, just hack around it for now.
         $repeatcount = $this->optional_param('privilege_repeat', 1, PARAM_INT);

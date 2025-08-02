@@ -115,7 +115,6 @@ final class sudoer {
         \tool_musudo\event\sudoer_updated::create_from_sudoer($sudoer)->trigger();
 
         return $sudoer;
-
     }
 
     /**
