@@ -15,7 +15,7 @@ Feature: Test tool_musudo privileged session
     And I set the following fields to these values:
       | User | manager1 |
       | Role | Manager  |
-    And I press dialog form button "Add privileged user"
+    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
     And I log out
 
     And I log in as "manager 1"
@@ -44,13 +44,13 @@ Feature: Test tool_musudo privileged session
       | User         | manager1 |
       | Role         | Manager  |
       | MFA required | 0        |
-    And I press dialog form button "Add privileged user"
+    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
     And I press "Add privileged user"
     And I set the following fields to these values:
       | User         | manager2 |
       | Role         | Manager  |
       | MFA required | 1        |
-    And I press dialog form button "Add privileged user"
+    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
     And I log out
 
     When I log in as "manager1"
@@ -86,7 +86,7 @@ Feature: Test tool_musudo privileged session
       | User         | manager1 |
       | Role         | Manager  |
       | MFA required | 1        |
-    And I press dialog form button "Add privileged user"
+    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
     And I log out
 
     When I log in as "manager1"
