@@ -89,8 +89,8 @@ final class form_sudoer_create_userid_test extends \advanced_testcase {
         $sudoer1 = sudoer::create((object)[
             'userid' => $user1->id,
             'contextid' => [$syscontext->id],
-            'roleid' => [$managerrole->id]],
-        );
+            'roleid' => [$managerrole->id],
+        ]);
         $result = form_sudoer_create_userid::execute('');
         $this->assertNull($result['notice']);
         $this->assertCount(3, $result['list']);

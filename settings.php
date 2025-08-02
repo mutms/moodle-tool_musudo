@@ -29,6 +29,9 @@ defined('MOODLE_INTERNAL') || die();
 $beforesibling = has_capability('moodle/role:manage', context_system::instance()) ? 'defineroles' : null;
 
 /** @var admin_root $ADMIN */
-$ADMIN->add('roles', new admin_externalpage('tool_musudo_sudoers',
+$ADMIN->add('roles', new admin_externalpage(
+    'tool_musudo_sudoers',
     get_string('sudoers', 'tool_musudo'),
-    new moodle_url('/admin/tool/musudo/index.php'), 'moodle/site:config'), $beforesibling);
+    new moodle_url('/admin/tool/musudo/index.php'),
+    'moodle/site:config'
+), $beforesibling);

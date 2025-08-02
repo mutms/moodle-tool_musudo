@@ -92,7 +92,7 @@ final class sudoer extends base {
             ->set_type(column::TYPE_TEXT)
             ->add_fields("{$sudoeralias}.note")
             ->set_is_sortable(false)
-            ->set_callback(static function(?string $value, \stdClass $row): string {
+            ->set_callback(static function (?string $value, \stdClass $row): string {
                 return s($row->note);
             });
 
@@ -104,7 +104,7 @@ final class sudoer extends base {
             ->add_joins($this->get_joins())
             ->add_fields("{$sudoeralias}.mfarequired")
             ->set_is_sortable(true)
-            ->set_callback(static function(?string $value, \stdClass $row): string {
+            ->set_callback(static function (?string $value, \stdClass $row): string {
                 if ($value) {
                     return get_string('yes');
                 } else {
@@ -120,7 +120,7 @@ final class sudoer extends base {
             ->add_joins($this->get_joins())
             ->add_fields("{$sudoeralias}.privilegesjson")
             ->set_is_sortable(false)
-            ->set_callback(static function(string $value, \stdClass $row): string {
+            ->set_callback(static function (string $value, \stdClass $row): string {
                 return \tool_musudo\local\sudoer::get_privileges_description($row, true);
             });
 

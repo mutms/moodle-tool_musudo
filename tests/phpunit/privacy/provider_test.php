@@ -91,7 +91,7 @@ final class provider_test extends \core_privacy\tests\provider_testcase {
     }
 
     public function test_get_contexts_for_userid(): void {
-        list($user1, $user2, $user3) = $this->set_up_data();
+        [$user1, $user2, $user3] = $this->set_up_data();
 
         $syscontext = \context_system::instance();
 
@@ -103,7 +103,7 @@ final class provider_test extends \core_privacy\tests\provider_testcase {
     }
 
     public function test_export_user_data(): void {
-        list($user1, $user2, $user3) = $this->set_up_data();
+        [$user1, $user2, $user3] = $this->set_up_data();
         $syscontext = \context_system::instance();
 
         $subcontexts = [get_string('sudoer', 'tool_musudo')];
@@ -117,13 +117,13 @@ final class provider_test extends \core_privacy\tests\provider_testcase {
 
     public function test_delete_data_for_all_users_in_context(): void {
         global $DB;
-        list($user1, $user2, $user3) = $this->set_up_data();
+        [$user1, $user2, $user3] = $this->set_up_data();
 
         $this->assertTrue($DB->record_exists('tool_musudo_sudoer', ['userid' => $user1->id]));
         $this->assertTrue($DB->record_exists('tool_musudo_sudoer', ['userid' => $user2->id]));
         $this->assertFalse($DB->record_exists('tool_musudo_sudoer', ['userid' => $user3->id]));
 
-        list($user1, $user2, $user3) = $this->set_up_data();
+        [$user1, $user2, $user3] = $this->set_up_data();
 
         $syscontext = \context_system::instance();
         provider::delete_data_for_all_users_in_context($syscontext);
@@ -135,7 +135,7 @@ final class provider_test extends \core_privacy\tests\provider_testcase {
 
     public function test_delete_data_for_user(): void {
         global $DB;
-        list($user1, $user2, $user3) = $this->set_up_data();
+        [$user1, $user2, $user3] = $this->set_up_data();
 
         $this->assertTrue($DB->record_exists('tool_musudo_sudoer', ['userid' => $user1->id]));
         $this->assertTrue($DB->record_exists('tool_musudo_sudoer', ['userid' => $user2->id]));
@@ -152,7 +152,7 @@ final class provider_test extends \core_privacy\tests\provider_testcase {
     }
 
     public function test_get_users_in_context(): void {
-        list($user1, $user2, $user3) = $this->set_up_data();
+        [$user1, $user2, $user3] = $this->set_up_data();
 
         $syscontext = \context_system::instance();
 
@@ -163,7 +163,7 @@ final class provider_test extends \core_privacy\tests\provider_testcase {
 
     public function test_delete_data_for_users(): void {
         global $DB;
-        list($user1, $user2, $user3) = $this->set_up_data();
+        [$user1, $user2, $user3] = $this->set_up_data();
 
         $this->assertTrue($DB->record_exists('tool_musudo_sudoer', ['userid' => $user1->id]));
         $this->assertTrue($DB->record_exists('tool_musudo_sudoer', ['userid' => $user2->id]));

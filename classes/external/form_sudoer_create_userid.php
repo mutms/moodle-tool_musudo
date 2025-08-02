@@ -69,8 +69,8 @@ final class form_sudoer_create_userid extends \tool_mulib\external\form_autocomp
         $fields = \core_user\fields::for_name()->with_identity($syscontext, false);
         $extrafields = $fields->get_required_fields([\core_user\fields::PURPOSE_IDENTITY]);
 
-        list($searchsql, $searchparams) = users_search_sql($query, 'usr', true, $extrafields);
-        list($sortsql, $sortparams) = users_order_by_sql('usr', $query, $syscontext);
+        [$searchsql, $searchparams] = users_search_sql($query, 'usr', true, $extrafields);
+        [$sortsql, $sortparams] = users_order_by_sql('usr', $query, $syscontext);
         $params = array_merge($searchparams, $sortparams);
 
         $admins = explode(',', $CFG->siteadmins);
@@ -100,7 +100,7 @@ SQL;
      * @return callable
      */
     public static function get_label_callback(array $arguments): callable {
-        return function($value) use ($arguments): string {
+        return function ($value) use ($arguments): string {
             global $DB;
 
             if (!$value) {
