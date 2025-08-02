@@ -17,7 +17,7 @@ Feature: Test tool_musudo sudoers management
     And I set the following fields to these values:
       | User | manager1 |
       | Role | Manager  |
-    And I press dialog form button "Add privileged user"
+    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | First name    | Email address        | Note | Privileges        |
       | First Manager | manager1@example.com |      | Manager in System |
@@ -27,11 +27,11 @@ Feature: Test tool_musudo sudoers management
       | User | manager2         |
       | Role | Teacher          |
       | Note | Trusted teacher  |
-    And I press dialog form button "Add privilege"
+    And I click on "Add privilege" "button" in the ".modal-dialog" "css_element"
     And I set the following fields to these values:
       | roleid[1]    | Manager |
       | contextid[1] | 3       |
-    And I press dialog form button "Add privileged user"
+    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | First name     | Email address        | Note            | Privileges                      |
       | First Manager  | manager1@example.com |                 | Manager in System               |
@@ -50,7 +50,7 @@ Feature: Test tool_musudo sudoers management
       | Note         | Semi-trusted        |
       | roleid[1]    | Non-editing teacher |
       | contextid[1] | 2                   |
-    And I press dialog form button "Update privileged user"
+    And I click on "Update privileged user" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | First name     | Email address        | Note            | Privileges                       |
       | First Manager  | manager1@example.com |                 | Manager in System                |
@@ -59,8 +59,8 @@ Feature: Test tool_musudo sudoers management
 
     When I click on "Actions" "link" in the "Second Manager" "table_row"
     And I click on "Update privileged user" "link" in the "Second Manager" "table_row"
-    And I press dialog form button "Delete privilege 2"
-    And I press dialog form button "Update privileged user"
+    And I click on "Delete privilege 2" "button" in the ".modal-dialog" "css_element"
+    And I click on "Update privileged user" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | First name     | Email address        | Note            | Privileges                       |
       | First Manager  | manager1@example.com |                 | Manager in System                |
@@ -69,7 +69,7 @@ Feature: Test tool_musudo sudoers management
 
     When I click on "Actions" "link" in the "Second Manager" "table_row"
     And I click on "Remove privileged user" "link" in the "Second Manager" "table_row"
-    And I press dialog form button "Remove privileged user"
+    And I click on "Remove privileged user" "button" in the ".modal-dialog" "css_element"
     Then the following should exist in the "reportbuilder-table" table:
       | First name     | Email address        | Note            | Privileges                       |
       | First Manager  | manager1@example.com |                 | Manager in System                |
