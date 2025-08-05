@@ -152,11 +152,11 @@ final class sudoers extends system_report {
         }
 
         $url = new moodle_url('/admin/tool/musudo/management/sudoer_update.php', ['id' => ':id']);
-        $link = new \tool_mulib\output\dialog_form\link($url, get_string('sudoer_update', 'tool_musudo'), 'i/settings');
+        $link = new \tool_mulib\output\ajax_form\link($url, get_string('sudoer_update', 'tool_musudo'), 'i/settings');
         $this->add_action($link->create_report_action());
 
         $url = new moodle_url('/admin/tool/musudo/management/sudoer_delete.php', ['id' => ':id']);
-        $link = new \tool_mulib\output\dialog_form\link($url, get_string('sudoer_delete', 'tool_musudo'), 'i/delete');
+        $link = new \tool_mulib\output\ajax_form\link($url, get_string('sudoer_delete', 'tool_musudo'), 'i/delete');
         $this->add_action($link->create_report_action(['class' => 'text-danger']));
     }
 }

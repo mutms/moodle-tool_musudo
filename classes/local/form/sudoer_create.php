@@ -29,7 +29,7 @@ use tool_musudo\local\mfa;
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class sudoer_create extends \tool_mulib\local\dialog_form {
+final class sudoer_create extends \tool_mulib\local\ajax_form {
     #[\Override]
     protected function definition() {
         $mform = $this->_form;
