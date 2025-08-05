@@ -32,10 +32,8 @@ use tool_musudo\local\sudoer;
 /** @var core_renderer $OUTPUT */
 /** @var stdClass $CFG */
 
-// phpcs:ignoreFile moodle.Files.MoodleInternal.MoodleInternalGlobalState
-if (!empty($_SERVER['HTTP_X_MULIB_DIALOG_FORM_REQUEST'])) {
-    define('AJAX_SCRIPT', true);
-}
+define('AJAX_SCRIPT', true);
+
 require('../../../../config.php');
 require_once($CFG->libdir.'/adminlib.php');
 
@@ -52,13 +50,10 @@ $returnurl = new moodle_url('/admin/tool/musudo/index.php');
 
 $form = new \tool_musudo\local\form\sudoer_delete(null, ['sudoer' => $sudoer, 'user' => $user]);
 if ($form->is_cancelled()) {
-    redirect($returnurl);
+    $form->ajax_form_cancelled($returnurl);
 } else if ($data = $form->get_data()) {
     sudoer::delete($sudoer->id);
-    $form->redirect_submitted($returnurl);
+    $form->ajax_form_submitted($returnurl);
 }
 
-echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('sudoer_delete', 'tool_musudo'));
-echo $form->render();
-echo $OUTPUT->footer();
+$form->ajax_form_render();
