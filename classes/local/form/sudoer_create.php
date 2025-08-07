@@ -18,7 +18,7 @@
 
 namespace tool_musudo\local\form;
 
-use tool_musudo\external\form_sudoer_create_userid;
+use tool_musudo\external\form_autocomplete\sudoer_create_userid;
 use tool_musudo\local\sudoer;
 use tool_musudo\local\mfa;
 
@@ -38,7 +38,7 @@ final class sudoer_create extends \tool_mulib\local\ajax_form {
         // NOTE: client side validation for required fields somehow fails for repeated elements,
         // so rely on server validation here.
 
-        form_sudoer_create_userid::add_form_element($mform, [], 'userid', get_string('user'));
+        sudoer_create_userid::add_element($mform, [], 'userid', get_string('user'), $syscontext);
         $mform->setType('userid', PARAM_INT);
         $mform->addRule('userid', get_string('required'), 'required', null, 'server');
 
@@ -95,10 +95,15 @@ final class sudoer_create extends \tool_mulib\local\ajax_form {
     public function validation($data, $files) {
         global $DB;
         $errors = parent::validation($data, $files);
+        $syscontext = \context_system::instance();
 
-        $error = form_sudoer_create_userid::validate_form_value([], $data['userid']);
-        if ($error !== null) {
-            $errors['userid'] = $error;
+        if ($data['userid']) {
+            $error = sudoer_create_userid::validate_value($data['userid'], [], $syscontext);
+            if ($error !== null) {
+                $errors['userid'] = $error;
+            }
+        } else {
+            $errors['userid'] = get_string('required');
         }
 
         $contextids = [];
