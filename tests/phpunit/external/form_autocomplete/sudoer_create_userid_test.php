@@ -18,9 +18,9 @@
 // phpcs:disable moodle.Files.LineLength.TooLong
 // phpcs:disable moodle.Commenting.DocblockDescription.Missing
 
-namespace tool_musudo\phpunit\external;
+namespace tool_musudo\phpunit\external\form_autocomplete;
 
-use tool_musudo\external\form_sudoer_create_userid;
+use tool_musudo\external\form_autocomplete\sudoer_create_userid;
 use tool_musudo\local\sudoer;
 
 /**
@@ -31,9 +31,9 @@ use tool_musudo\local\sudoer;
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @covers \tool_musudo\external\form_sudoer_create_userid
+ * @covers \tool_musudo\external\form_autocomplete\sudoer_create_userid
  */
-final class form_sudoer_create_userid_test extends \advanced_testcase {
+final class sudoer_create_userid_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();
         $this->resetAfterTest();
@@ -78,8 +78,8 @@ final class form_sudoer_create_userid_test extends \advanced_testcase {
 
         $this->setAdminUser();
 
-        $result = form_sudoer_create_userid::execute('');
-        $this->assertNull($result['notice']);
+        $result = sudoer_create_userid::execute('');
+        $this->assertFalse($result['overflow']);
         $this->assertCount(4, $result['list']);
         $this->assertSame($manager1->id, $result['list'][0]['value']);
         $this->assertSame($user1->id, $result['list'][1]['value']);
@@ -91,15 +91,15 @@ final class form_sudoer_create_userid_test extends \advanced_testcase {
             'contextid' => [$syscontext->id],
             'roleid' => [$managerrole->id],
         ]);
-        $result = form_sudoer_create_userid::execute('');
-        $this->assertNull($result['notice']);
+        $result = sudoer_create_userid::execute('');
+        $this->assertFalse($result['overflow']);
         $this->assertCount(3, $result['list']);
         $this->assertSame($manager1->id, $result['list'][0]['value']);
         $this->assertSame($user2->id, $result['list'][1]['value']);
         $this->assertSame($user3->id, $result['list'][2]['value']);
 
-        $result = form_sudoer_create_userid::execute('user2');
-        $this->assertNull($result['notice']);
+        $result = sudoer_create_userid::execute('user2');
+        $this->assertFalse($result['overflow']);
         $this->assertCount(1, $result['list']);
         $this->assertSame($user2->id, $result['list'][0]['value']);
         $this->assertStringContainsString(fullname($user2), $result['list'][0]['label']);
@@ -107,7 +107,7 @@ final class form_sudoer_create_userid_test extends \advanced_testcase {
 
         $this->setUser($manager1);
         try {
-            form_sudoer_create_userid::execute('');
+            sudoer_create_userid::execute('');
             $this->fail('Exception expected');
         } catch (\core\exception\moodle_exception $ex) {
             $this->assertSame('Invalid role', $ex->getMessage());

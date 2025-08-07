@@ -27,8 +27,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $functions = [
-    'tool_musudo_form_sudoer_create_userid' => [
-        'classname' => tool_musudo\external\form_sudoer_create_userid::class,
+    'tool_musudo_form_autocomplete_sudoer_create_userid' => [
+        'classname' => tool_musudo\external\form_autocomplete\sudoer_create_userid::class,
         'description' => 'Return list of candidates for new sudo user.',
         'type' => 'read',
         'ajax' => true,

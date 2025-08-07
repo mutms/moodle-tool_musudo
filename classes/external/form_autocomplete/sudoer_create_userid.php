@@ -16,7 +16,7 @@
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 
-namespace tool_musudo\external;
+namespace tool_musudo\external\form_autocomplete;
 
 use core_external\external_function_parameters;
 use core_external\external_value;
@@ -29,21 +29,13 @@ use tool_musudo\local\util;
  * @copyright   2025 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class form_sudoer_create_userid extends \tool_mulib\external\form_autocomplete_field {
-    /**
-     * True means returned field data is array, false means value is scalar.
-     *
-     * @return bool
-     */
-    public static function is_multi_select_field(): bool {
+final class sudoer_create_userid extends \tool_mulib\external\form_autocomplete\user {
+    #[\Override]
+    public static function get_multiple(): bool {
         return false;
     }
 
-    /**
-     * Describes the external function arguments.
-     *
-     * @return external_function_parameters
-     */
+    #[\Override]
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters([
             'query' => new external_value(PARAM_RAW, 'The search query', VALUE_REQUIRED),
@@ -59,7 +51,14 @@ final class form_sudoer_create_userid extends \tool_mulib\external\form_autocomp
     public static function execute(string $query): array {
         global $DB, $CFG;
 
-        ['query' => $query] = self::validate_parameters(self::execute_parameters(), ['query' => $query]);
+        [
+            'query' => $query,
+        ] = self::validate_parameters(
+            self::execute_parameters(),
+            [
+                'query' => $query,
+            ]
+        );
 
         util::require_admin();
 
@@ -77,9 +76,8 @@ final class form_sudoer_create_userid extends \tool_mulib\external\form_autocomp
         $admins = array_map('intval', $admins);
         $admins = implode(',', $admins);
 
-        $additionalfields = $fields->get_sql('usr')->selects;
         $sqlquery = <<<SQL
-            SELECT usr.id {$additionalfields}
+            SELECT usr.*
               FROM {user} usr
          LEFT JOIN {tool_musudo_sudoer} su ON su.userid = usr.id
              WHERE {$searchsql}
@@ -88,48 +86,14 @@ final class form_sudoer_create_userid extends \tool_mulib\external\form_autocomp
           ORDER BY {$sortsql}
 SQL;
 
-        $rs = $DB->get_recordset_sql($sqlquery, $params, 0, $CFG->maxusersperpage + 1);
+        $users = $DB->get_records_sql($sqlquery, $params, 0, $CFG->maxusersperpage + 1);
 
-        return self::prepare_user_list($rs, $extrafields);
+        return self::prepare_result($users, $syscontext);
     }
 
-    /**
-     * Return function that return label for given value.
-     *
-     * @param array $arguments
-     * @return callable
-     */
-    public static function get_label_callback(array $arguments): callable {
-        return function ($value) use ($arguments): string {
-            global $DB;
-
-            if (!$value) {
-                return get_string('notset', 'tool_mulib');
-            }
-
-            $record = $DB->get_record('user', ['id' => $value]);
-            if (!$record) {
-                return get_string('error');
-            }
-
-            $syscontext = \context_system::instance();
-            return self::prepare_user_label($record, $syscontext);
-        };
-    }
-
-    /**
-     * Validate values.
-     *
-     * @param array $arguments
-     * @param mixed $value
-     * @return string|null error message, NULL means value is ok
-     */
-    public static function validate_form_value(array $arguments, $value): ?string {
+    #[\Override]
+    public static function validate_value(int $value, array $args, \context $context): ?string {
         global $DB;
-
-        if (!$value) {
-            return get_string('error');
-        }
 
         $user = $DB->get_record('user', ['id' => $value]);
         if (!$user || $user->deleted || !$user->confirmed) {
