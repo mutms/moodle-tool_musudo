@@ -28,14 +28,14 @@ defined('MOODLE_INTERNAL') || die();
 
 /** @var stdClass $plugin */
 $plugin->component = 'tool_musudo';
-$plugin->version = 2025080750;
+$plugin->version = 2025080950;
 $plugin->requires = 2025041400;
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->supported = [500, 500];
 
-$plugin->release = 'mu-5.0.1-01+';
+$plugin->release = 'mu-5.0.2-01';
 
 $plugin->dependencies = [
-    'tool_mulib' => 2025080750,
+    'tool_mulib' => 2025080950,
     'tool_mfa' => 2025041400,
 ];
