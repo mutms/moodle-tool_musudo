@@ -35,7 +35,7 @@ use tool_musudo\local\sudoer;
 define('AJAX_SCRIPT', true);
 
 require('../../../../config.php');
-require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 $id = required_param('id', PARAM_INT);
 
