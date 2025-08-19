@@ -43,7 +43,7 @@ final class sudoers extends system_report {
 
     #[\Override]
     protected function initialise(): void {
-        global $DB, $PAGE;
+        global $PAGE;
 
         // RB does not set PAGE->context properly in ajax requests, oh well...
         if (defined('AJAX_SCRIPT') && AJAX_SCRIPT) {
