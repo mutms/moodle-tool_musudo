@@ -35,7 +35,7 @@ use tool_musudo\local\sudoer;
 define('AJAX_SCRIPT', true);
 
 require('../../../../config.php');
-require_once($CFG->libdir.'/adminlib.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 admin_externalpage_setup('tool_musudo_sudoers', '', null, '', ['pagelayout' => 'report', 'nosearch' => true]);
 
