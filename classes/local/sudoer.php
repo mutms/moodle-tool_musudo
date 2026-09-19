@@ -389,12 +389,12 @@ final class sudoer {
         }
 
         if (self::is_sudo_started()) {
-            $item = new \stdClass();
-            $item->itemtype = 'link';
-            $item->url = new \moodle_url('/admin/tool/musudo/sudo_end.php', ['sesskey' => sesskey()]);
-            $item->title = get_string('sudo_end', 'tool_musudo');
-            $item->titleidentifier = 'sudo_end,tool_musudo';
-            $hook->add_navitem($item);
+            $item = new \core_user\output\user_action_menu\link(
+                new \core\url('/admin/tool/musudo/sudo_end.php', ['sesskey' => sesskey()]),
+                get_string('sudo_end', 'tool_musudo'),
+                'sudo_end,tool_musudo'
+            );
+            $hook->add_menu_item($item);
             return;
         }
 
@@ -402,11 +402,12 @@ final class sudoer {
             return;
         }
 
-        $item = new \stdClass();
-        $item->itemtype = 'link';
-        $item->url = new \moodle_url('/admin/tool/musudo/sudo_start.php');
-        $item->title = get_string('sudo_start', 'tool_musudo');
-        $item->titleidentifier = 'sudo_start,tool_musudo';
-        $hook->add_navitem($item);
+        $item = new \core_user\output\user_action_menu\link(
+            new \core\url('/admin/tool/musudo/sudo_start.php'),
+            get_string('sudo_start', 'tool_musudo'),
+            'sudo_start,tool_musudo'
+        );
+        $hook->add_menu_item($item);
+
     }
 }

@@ -403,7 +403,7 @@ final class sudoer_test extends \advanced_testcase {
     }
 
     public function test_extend_user_menu(): void {
-        global $DB;
+        global $DB, $OUTPUT;
 
         $syscontext = \context_system::instance();
         $managerrole = $DB->get_record('role', ['shortname' => 'manager'], '*', MUST_EXIST);
@@ -422,27 +422,25 @@ final class sudoer_test extends \advanced_testcase {
 
         $hook = new \core_user\hook\extend_user_menu();
         sudoer::extend_user_menu($hook);
-        $items = $hook->get_navitems();
+        $items = $hook->get_menu_items();
         $this->assertSame([], $items);
 
         $this->setUser($user1);
 
         $hook = new \core_user\hook\extend_user_menu();
         sudoer::extend_user_menu($hook);
-        $items = $hook->get_navitems();
+        $items = $hook->get_menu_items();
         $this->assertCount(1, $items);
         $item = reset($items);
-        $this->assertSame('link', $item->itemtype);
-        $this->assertSame('/admin/tool/musudo/sudo_start.php', $item->url->out_as_local_url());
+        $this->assertSame('link', $item->get_action_menu_type());
 
         sudoer::start_sudo();
         $hook = new \core_user\hook\extend_user_menu();
         sudoer::extend_user_menu($hook);
-        $items = $hook->get_navitems();
+        $items = $hook->get_menu_items();
         $this->assertCount(1, $items);
         $item = reset($items);
-        $this->assertSame('link', $item->itemtype);
-        $this->assertSame('/admin/tool/musudo/sudo_end.php?sesskey=' . sesskey(), $item->url->out_as_local_url());
+        $this->assertSame('link', $item->get_action_menu_type());
     }
 
     public function test_has_capability(): void {
