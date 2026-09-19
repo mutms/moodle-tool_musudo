@@ -408,6 +408,5 @@ final class sudoer {
             'sudo_start,tool_musudo'
         );
         $hook->add_menu_item($item);
-
     }
 }
