@@ -24,36 +24,52 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use tool_musudo\local\util;
+use tool_mulib\muform\handler;
+use tool_musudo\local\form\sudoer_update;
 use tool_musudo\local\sudoer;
+use tool_musudo\local\util;
 
 /** @var moodle_database $DB */
 /** @var moodle_page $PAGE */
-/** @var core_renderer $OUTPUT */
 /** @var stdClass $CFG */
-
-define('AJAX_SCRIPT', true);
 
 require('../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
 $id = required_param('id', PARAM_INT);
 
-admin_externalpage_setup('tool_musudo_sudoers', '', null, '', ['pagelayout' => 'report', 'nosearch' => true]);
+$pageurl = new core\url('/admin/tool/musudo/management/sudoer_update.php', ['id' => $id]);
+admin_externalpage_setup('tool_musudo_sudoers', '', null, $pageurl, ['pagelayout' => 'report', 'nosearch' => true]);
 
 util::require_admin();
+
+$title = get_string('sudoer_update', 'tool_musudo');
+$PAGE->set_title($title);
+$PAGE->set_heading($title);
 
 $sudoer = $DB->get_record('tool_musudo_sudoer', ['id' => $id], '*', MUST_EXIST);
 $user = $DB->get_record('user', ['id' => $sudoer->userid]);
 
-$returnurl = new moodle_url('/admin/tool/musudo/index.php');
+$returnurl = new core\url('/admin/tool/musudo/index.php');
 
-$form = new \tool_musudo\local\form\sudoer_update(null, ['sudoer' => $sudoer, 'user' => $user]);
+$handler = handler::from_request();
+
+$current = [
+    'username' => $user ? fullname($user) : get_string('error'),
+    'note' => $sudoer->note,
+    'mfarequired' => $sudoer->mfarequired,
+];
+$current += sudoer_update::get_privileges_current_data(json_decode($sudoer->privilegesjson));
+$form = new sudoer_update($pageurl, $current);
+
 if ($form->is_cancelled()) {
-    $form->ajax_form_cancelled($returnurl);
-} else if ($data = $form->get_data()) {
-    $sudoer = sudoer::update($data);
-    $form->ajax_form_submitted($returnurl);
+    $handler->cancelled($returnurl);
 }
 
-$form->ajax_form_render();
+if ($data = $form->get_data()) {
+    $data->id = $sudoer->id;
+    sudoer::update(sudoer_update::get_privileges_data($data));
+    $handler->submitted($returnurl);
+}
+
+$handler->render($form);

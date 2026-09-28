@@ -24,31 +24,40 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-use tool_musudo\local\util;
+use tool_mulib\muform\handler;
+use tool_musudo\local\form\sudoer_create;
 use tool_musudo\local\sudoer;
+use tool_musudo\local\util;
 
 /** @var moodle_database $DB */
 /** @var moodle_page $PAGE */
-/** @var core_renderer $OUTPUT */
 /** @var stdClass $CFG */
-
-define('AJAX_SCRIPT', true);
 
 require('../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('tool_musudo_sudoers', '', null, '', ['pagelayout' => 'report', 'nosearch' => true]);
+$pageurl = new core\url('/admin/tool/musudo/management/sudoer_create.php');
+admin_externalpage_setup('tool_musudo_sudoers', '', null, $pageurl, ['pagelayout' => 'report', 'nosearch' => true]);
 
 util::require_admin();
 
-$returnurl = new moodle_url('/admin/tool/musudo/index.php');
+$title = get_string('sudoer_create', 'tool_musudo');
+$PAGE->set_title($title);
+$PAGE->set_heading($title);
 
-$form = new \tool_musudo\local\form\sudoer_create(null, []);
+$returnurl = new core\url('/admin/tool/musudo/index.php');
+
+$handler = handler::from_request();
+
+$form = new sudoer_create($pageurl, ['level_0' => 'system']);
+
 if ($form->is_cancelled()) {
-    $form->ajax_form_cancelled($returnurl);
-} else if ($data = $form->get_data()) {
-    $sudoer = sudoer::create($data);
-    $form->ajax_form_submitted($returnurl);
+    $handler->cancelled($returnurl);
 }
 
-$form->ajax_form_render();
+if ($data = $form->get_data()) {
+    sudoer::create(sudoer_create::get_privileges_data($data));
+    $handler->submitted($returnurl);
+}
+
+$handler->render($form);

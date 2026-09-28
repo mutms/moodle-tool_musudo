@@ -38,8 +38,8 @@ $buttons = [];
 
 if (is_siteadmin()) {
     $url = new moodle_url('/admin/tool/musudo/management/sudoer_create.php');
-    $button = new tool_mulib\output\ajax_form\button($url, get_string('sudoer_create', 'tool_musudo'));
-    $button->set_submitted_action($button::SUBMITTED_ACTION_REDIRECT);
+    $button = new tool_mulib\output\muform\dialog\button($url, get_string('sudoer_create', 'tool_musudo'));
+    $button->set_submitted_action(\tool_mulib\muform\handler\dialog::ACTION_REDIRECT);
     $buttons[] = $OUTPUT->render($button);
 }
 

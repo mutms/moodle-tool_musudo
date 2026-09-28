@@ -18,7 +18,11 @@
 
 namespace tool_musudo\local\form;
 
-use tool_musudo\local\sudoer;
+use tool_mulib\muform\element\buttons;
+use tool_mulib\muform\element\cancel;
+use tool_mulib\muform\element\info;
+use tool_mulib\muform\element\submit;
+use tool_mulib\muform\form;
 
 /**
  * Remove sudo user.
@@ -27,24 +31,13 @@ use tool_musudo\local\sudoer;
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class sudoer_delete extends \tool_mulib\local\ajax_form {
+final class sudoer_delete extends form {
     #[\Override]
-    protected function definition() {
-        $mform = $this->_form;
-        $sudoer = $this->_customdata['sudoer'];
-        $user = $this->_customdata['user'];
+    protected function definition(): void {
+        $this->add(new info('username', get_string('user')));
 
-        if ($user) {
-            $username = fullname($user);
-        } else {
-            $username = get_string('error');
-        }
-        $mform->addElement('static', 'username', get_string('user'), $username);
-
-        $mform->addElement('hidden', 'id');
-        $mform->setType('id', PARAM_INT);
-        $mform->setDefault('id', $sudoer->id);
-
-        $this->add_action_buttons(true, get_string('sudoer_delete', 'tool_musudo'));
+        $this->add(new buttons('buttons'));
+        $this->add(new submit('submit', get_string('sudoer_delete', 'tool_musudo')), 'buttons');
+        $this->add(new cancel(), 'buttons');
     }
 }

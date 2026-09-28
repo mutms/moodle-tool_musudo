@@ -12,10 +12,10 @@ Feature: Test tool_musudo privileged session
     Given I log in as "admin"
     And I navigate to "Users > Permissions > Privileged users" in site administration
     And I press "Add privileged user"
-    And I set the following fields to these values:
-      | User | manager1 |
-      | Role | Manager  |
-    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
+    And I set the following muform fields in the "dialog[open]" "css_element":
+      | User     | manager1 |
+      | roleid_0 | Manager  |
+    And I click on "Add privileged user" "button" in the "dialog[open]" "css_element"
     And I log out
 
     And I log in as "manager 1"
@@ -39,17 +39,17 @@ Feature: Test tool_musudo privileged session
     And I change viewport size to "medium"
     And I navigate to "Users > Permissions > Privileged users" in site administration
     And I press "Add privileged user"
-    And I set the following fields to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | User         | manager1 |
-      | Role         | Manager  |
+      | roleid_0     | Manager  |
       | MFA required | 0        |
-    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
+    And I click on "Add privileged user" "button" in the "dialog[open]" "css_element"
     And I press "Add privileged user"
-    And I set the following fields to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | User         | manager2 |
-      | Role         | Manager  |
+      | roleid_0     | Manager  |
       | MFA required | 1        |
-    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
+    And I click on "Add privileged user" "button" in the "dialog[open]" "css_element"
     And I log out
 
     When I log in as "manager1"
@@ -80,11 +80,11 @@ Feature: Test tool_musudo privileged session
     And I change viewport size to "medium"
     And I navigate to "Users > Permissions > Privileged users" in site administration
     And I press "Add privileged user"
-    And I set the following fields to these values:
+    And I set the following muform fields in the "dialog[open]" "css_element":
       | User         | manager1 |
-      | Role         | Manager  |
+      | roleid_0     | Manager  |
       | MFA required | 1        |
-    And I click on "Add privileged user" "button" in the ".modal-dialog" "css_element"
+    And I click on "Add privileged user" "button" in the "dialog[open]" "css_element"
     And I log out
 
     When I log in as "manager1"

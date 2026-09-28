@@ -18,7 +18,13 @@
 
 namespace tool_musudo\local\form;
 
-use tool_musudo\local\sudoer;
+use tool_mulib\muform\element\buttons;
+use tool_mulib\muform\element\cancel;
+use tool_mulib\muform\element\checkbox;
+use tool_mulib\muform\element\info;
+use tool_mulib\muform\element\submit;
+use tool_mulib\muform\element\textarea;
+use tool_mulib\muform\form;
 use tool_musudo\local\mfa;
 
 /**
@@ -28,121 +34,29 @@ use tool_musudo\local\mfa;
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class sudoer_update extends \tool_mulib\local\ajax_form {
+final class sudoer_update extends form {
+    use privileges_trait;
+
     #[\Override]
-    protected function definition() {
-        $mform = $this->_form;
-        $sudoer = $this->_customdata['sudoer'];
-        $user = $this->_customdata['user'];
+    protected function definition(): void {
+        $this->add(new info('username', get_string('user')));
 
-        if ($user) {
-            $username = fullname($user);
-        } else {
-            $username = get_string('error');
-        }
-        $mform->addElement('static', 'username', get_string('user'), $username);
-
-        $currentdata = [
-            'id' => $sudoer->id,
-            'note' => $sudoer->note,
-            'mfarequired' => $sudoer->mfarequired,
-            'contextid' => [],
-            'roleid' => [],
-        ];
-        $privileges = json_decode($sudoer->privilegesjson);
-        $privileges = array_values($privileges);
-        foreach ($privileges as $i => $privilege) {
-            $currentdata['contextid'][] = $privilege->contextid;
-            $currentdata['roleid'][] = $privilege->roleid;
-        }
-
-        $mform->addElement('textarea', 'note', get_string('sudoer_note', 'tool_musudo'), ['rows' => 3]);
-        $mform->setType('note', PARAM_TEXT);
+        $this->add(new textarea('note', get_string('sudoer_note', 'tool_musudo'), ['rows' => 3]));
 
         if (mfa::is_mfa_enabled()) {
-            $mform->addElement('advcheckbox', 'mfarequired', get_string('mfarequired', 'tool_musudo'));
+            $this->add(new checkbox('mfarequired', get_string('mfarequired', 'tool_musudo')));
         }
 
         // Dealing with deleted roles would be a hassle here...
-        $roles = ['' => get_string('choosedots')] + sudoer::get_role_options();
+        $this->add_privileges();
 
-        $repeat = [];
-        $repeatopts = [];
-
-        $repeat[] = $mform->createElement('header', 'roleheader', get_string('privilege_heading', 'tool_musudo'));
-
-        $repeat[] = $mform->createElement('select', 'roleid', get_string('role'), $roles);
-
-        $repeat[] = $mform->createElement('text', 'contextid', get_string('contextid', 'tool_musudo'), ['size' => 5]);
-        $repeatopts['contextid']['type'] = PARAM_INT;
-
-        $repeat[] = $mform->createElement('submit', 'privilege_delete', get_string('privilege_delete', 'tool_musudo'), [], false);
-
-        $this->repeat_elements(
-            $repeat,
-            count($privileges),
-            $repeatopts,
-            'privilege_repeat',
-            'privilege_more',
-            1,
-            get_string('privilege_more', 'tool_musudo'),
-            false,
-            'privilege_delete'
-        );
-
-        // NOTE: repeat options are not working much when stuff gets deleted, just hack around it for now.
-        $repeatcount = $this->optional_param('privilege_repeat', count($privileges), PARAM_INT);
-        for ($i = 0; $i < $repeatcount + 1; $i++) {
-            if ($mform->elementExists("contextid[$i]")) {
-                $mform->addRule("contextid[$i]", get_string('required'), 'required', null, 'server');
-                $mform->addRule("roleid[$i]", get_string('required'), 'required', null, 'server');
-            }
-        }
-
-        $mform->addElement('hidden', 'id');
-        $mform->setType('id', PARAM_INT);
-
-        $this->add_action_buttons(true, get_string('sudoer_update', 'tool_musudo'));
-
-        $this->set_data($currentdata);
+        $this->add(new buttons('buttons'));
+        $this->add(new submit('submit', get_string('sudoer_update', 'tool_musudo')), 'buttons');
+        $this->add(new cancel(), 'buttons');
     }
 
     #[\Override]
-    public function validation($data, $files) {
-        global $DB;
-        $errors = parent::validation($data, $files);
-
-        $contextids = [];
-        if (empty($data['contextid'])) {
-            $errors['privilege_more'] = get_string('required');
-        } else {
-            foreach ($data['contextid'] as $i => $contextid) {
-                if ($contextid) {
-                    $context = \context::instance_by_id($contextid, IGNORE_MISSING);
-                    if ($context) {
-                        if (isset($contextids[$context->id])) {
-                            $errors["contextid[$i]"] = get_string('error');
-                        } else {
-                            $contextids[$context->id] = true;
-                        }
-                    } else {
-                        $errors["contextid[$i]"] = get_string('error');
-                    }
-                } else {
-                    $errors["contextid[$i]"] = get_string('required');
-                }
-
-                if (empty($data['roleid'][$i])) {
-                    $errors["roleid[$i]"] = get_string('required');
-                } else {
-                    $role = $DB->get_record('role', ['id' => $data['roleid'][$i]]);
-                    if (!$role) {
-                        $errors["roleid[$i]"] = get_string('error');
-                    }
-                }
-            }
-        }
-
-        return $errors;
+    protected function validation(array $data, array &$allerrors): void {
+        $this->validate_privileges($data, $allerrors);
     }
 }
