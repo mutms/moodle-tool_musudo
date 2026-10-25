@@ -78,7 +78,8 @@ final class sudoer_create_userid_test extends \advanced_testcase {
         $this->assertNull($source->label((string)$user1->id));
         $this->assertNull($source->label((string)$admin2->id));
         $this->assertNull($source->validate((string)$user2->id));
-        $this->assertSame('Suspended user', $source->validate((string)$user3->id));
+        // Suspended users are allowed, the same as in 4.5.
+        $this->assertNull($source->validate((string)$user3->id));
 
         $this->setUser($manager1);
         try {
