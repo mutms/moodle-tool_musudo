@@ -20,17 +20,18 @@ namespace tool_musudo\phpunit\muform\autocomplete;
 
 use tool_musudo\local\sudoer;
 use tool_musudo\muform\autocomplete\sudoer_create_userid;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * New privileged user autocomplete source tests.
  *
- * @group       MuTMS
  * @package     tool_musudo
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_musudo\muform\autocomplete\sudoer_create_userid
  */
+#[CoversClass(\tool_musudo\muform\autocomplete\sudoer_create_userid::class)]
+#[Group('MuTMS')]
 final class sudoer_create_userid_test extends \advanced_testcase {
     public function test_source(): void {
         global $DB;

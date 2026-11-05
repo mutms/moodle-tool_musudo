@@ -22,17 +22,18 @@ namespace tool_musudo\phpunit\event;
 
 use tool_musudo\event\sudo_ended;
 use tool_musudo\local\sudoer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Sudo ended event test.
  *
- * @group      MuTMS
  * @package    tool_musudo
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_musudo\event\sudoer_created
  */
+#[CoversClass(\tool_musudo\event\sudoer_created::class)]
+#[Group('MuTMS')]
 final class sudo_ended_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

@@ -23,17 +23,18 @@ namespace tool_musudo\phpunit\privacy;
 use tool_musudo\privacy\provider;
 use tool_musudo\local\sudoer;
 use core_privacy\local\request\writer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Privacy provider tests.
  *
- * @group       MuTMS
  * @package     tool_musudo
  * @copyright   2025 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_musudo\privacy\provider
  */
+#[CoversClass(\tool_musudo\privacy\provider::class)]
+#[Group('MuTMS')]
 final class provider_test extends \core_privacy\tests\provider_testcase {
     protected function setUp(): void {
         parent::setUp();

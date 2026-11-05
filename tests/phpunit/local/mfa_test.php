@@ -21,17 +21,18 @@
 namespace tool_musudo\phpunit\local;
 
 use tool_musudo\local\mfa;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * MFA helper test.
  *
- * @group      MuTMS
  * @package    tool_musudo
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_musudo\local\mfa
  */
+#[CoversClass(\tool_musudo\local\mfa::class)]
+#[Group('MuTMS')]
 final class mfa_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

@@ -22,17 +22,18 @@ namespace tool_musudo\phpunit\local;
 
 use tool_musudo\local\sudoer;
 use tool_musudo\local\util;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test for sudoer class.
  *
- * @group      MuTMS
  * @package    tool_musudo
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_musudo\local\sudoer
  */
+#[CoversClass(\tool_musudo\local\sudoer::class)]
+#[Group('MuTMS')]
 final class sudoer_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

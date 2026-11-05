@@ -22,17 +22,18 @@ namespace tool_musudo\phpunit\event;
 
 use tool_musudo\event\sudoer_deleted;
 use tool_musudo\local\sudoer;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Sudoer deleted event test.
  *
- * @group      MuTMS
  * @package    tool_musudo
  * @copyright  2025 Petr Skoda
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_musudo\event\sudoer_deleted
  */
+#[CoversClass(\tool_musudo\event\sudoer_deleted::class)]
+#[Group('MuTMS')]
 final class sudoer_deleted_test extends \advanced_testcase {
     public function setUp(): void {
         parent::setUp();

@@ -21,19 +21,20 @@ namespace tool_musudo\phpunit\muform\autocomplete;
 use tool_musudo\muform\autocomplete\privilege_category;
 use tool_musudo\muform\autocomplete\privilege_course;
 use tool_musudo\muform\autocomplete\privilege_tenant;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Privilege context autocomplete source tests.
  *
- * @group       MuTMS
  * @package     tool_musudo
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- *
- * @covers \tool_musudo\muform\autocomplete\privilege_category
- * @covers \tool_musudo\muform\autocomplete\privilege_course
- * @covers \tool_musudo\muform\autocomplete\privilege_tenant
  */
+#[CoversClass(\tool_musudo\muform\autocomplete\privilege_category::class)]
+#[CoversClass(\tool_musudo\muform\autocomplete\privilege_course::class)]
+#[CoversClass(\tool_musudo\muform\autocomplete\privilege_tenant::class)]
+#[Group('MuTMS')]
 final class privilege_context_test extends \advanced_testcase {
     public function test_category(): void {
         $this->resetAfterTest();
