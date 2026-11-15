@@ -45,17 +45,17 @@ final class sudoer_create_userid extends \tool_mulib\muform\autocomplete\base {
     }
 
     #[\Override]
-    public function search(string $query, int $maxitems): ?array {
+    public function search(string $query, int $maxitems, array $exclude): ?array {
         return $this->search_users(\context_system::instance(), $query, $maxitems, [], $this->get_where());
     }
 
     #[\Override]
-    public function label(string $value): ?string {
+    protected function label_value(string $value): ?string {
         return $this->user_labels(\context_system::instance(), [$value], $this->get_where())[$value] ?? null;
     }
 
     #[\Override]
-    public function validate(string $value): ?string {
+    protected function validate_value(string $value): ?string {
         return $this->validate_users([$value])[$value] ?? null;
     }
 

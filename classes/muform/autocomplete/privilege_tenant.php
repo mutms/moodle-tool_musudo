@@ -42,7 +42,7 @@ final class privilege_tenant extends \tool_mulib\muform\autocomplete\base {
     }
 
     #[\Override]
-    public function search(string $query, int $maxitems): ?array {
+    public function search(string $query, int $maxitems, array $exclude): ?array {
         global $DB;
 
         $sql = new sql(
@@ -67,7 +67,7 @@ final class privilege_tenant extends \tool_mulib\muform\autocomplete\base {
     }
 
     #[\Override]
-    public function label(string $value): ?string {
+    protected function label_value(string $value): ?string {
         global $DB;
         if (!preg_match('/^[1-9][0-9]*$/D', $value)) {
             return null;

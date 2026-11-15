@@ -48,14 +48,17 @@ final class privilege_context_test extends \advanced_testcase {
         $this->setAdminUser();
         $source = new privilege_category();
         $this->assertSame([], $source->get_args());
-        $result = $source->search('Kategorie', 50);
+        $result = $source->search('Kategorie', 50, []);
         $this->assertSame([$catcontext1->id => 'Kategorie 1', $catcontext2->id => 'Kategorie 1 / Kategorie 2'], $result);
-        $this->assertSame([$catcontext1->id => 'Kategorie 1'], $source->search('KAT1', 50));
-        $this->assertNull($source->search('', 1));
-        $this->assertSame('Kategorie 1 / Kategorie 2', $source->label((string)$catcontext2->id));
-        $this->assertNull($source->label((string)\context_system::instance()->id));
-        $this->assertNull($source->label((string)\context_course::instance($course->id)->id));
-        $this->assertNull($source->label('x'));
+        $this->assertSame([$catcontext1->id => 'Kategorie 1'], $source->search('KAT1', 50, []));
+        $this->assertNull($source->search('', 1, []));
+        $value = (string)$catcontext2->id;
+        $this->assertSame('Kategorie 1 / Kategorie 2', $source->labels([$value])[$value] ?? null);
+        $value = (string)\context_system::instance()->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
+        $value = (string)\context_course::instance($course->id)->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
+        $this->assertNull($source->labels(['x'])['x'] ?? null);
 
         $this->setUser($this->getDataGenerator()->create_user());
         $this->expectException(\core\exception\moodle_exception::class);
@@ -74,13 +77,16 @@ final class privilege_context_test extends \advanced_testcase {
         $this->setAdminUser();
         $source = new privilege_course();
         $this->assertSame([], $source->get_args());
-        $this->assertSame([$context1->id => 'Kurz 1', $context2->id => 'Kurz 2'], $source->search('Kurz', 50));
-        $this->assertSame([$context2->id => 'Kurz 2'], $source->search('KID2', 50));
-        $this->assertCount(3, $source->search('', 50));
-        $this->assertNull($source->search('', 2));
-        $this->assertSame('Kurz 1', $source->label((string)$context1->id));
-        $this->assertNotNull($source->label((string)$sitecontext->id));
-        $this->assertNull($source->label((string)\context_system::instance()->id));
+        $this->assertSame([$context1->id => 'Kurz 1', $context2->id => 'Kurz 2'], $source->search('Kurz', 50, []));
+        $this->assertSame([$context2->id => 'Kurz 2'], $source->search('KID2', 50, []));
+        $this->assertCount(3, $source->search('', 50, []));
+        $this->assertNull($source->search('', 2, []));
+        $value = (string)$context1->id;
+        $this->assertSame('Kurz 1', $source->labels([$value])[$value] ?? null);
+        $value = (string)$sitecontext->id;
+        $this->assertNotNull($source->labels([$value])[$value] ?? null);
+        $value = (string)\context_system::instance()->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
 
         $this->setUser($this->getDataGenerator()->create_user());
         $this->expectException(\core\exception\moodle_exception::class);
@@ -104,11 +110,13 @@ final class privilege_context_test extends \advanced_testcase {
         $this->setAdminUser();
         $source = new privilege_tenant();
         $this->assertSame([], $source->get_args());
-        $this->assertSame([$context1->id => 'Firma 1', $context2->id => 'Firma 2'], $source->search('Firma', 50));
-        $this->assertSame([$context2->id => 'Firma 2'], $source->search('f2', 50));
-        $this->assertNull($source->search('', 1));
-        $this->assertSame('Firma 1', $source->label((string)$context1->id));
-        $this->assertNull($source->label((string)\context_system::instance()->id));
+        $this->assertSame([$context1->id => 'Firma 1', $context2->id => 'Firma 2'], $source->search('Firma', 50, []));
+        $this->assertSame([$context2->id => 'Firma 2'], $source->search('f2', 50, []));
+        $this->assertNull($source->search('', 1, []));
+        $value = (string)$context1->id;
+        $this->assertSame('Firma 1', $source->labels([$value])[$value] ?? null);
+        $value = (string)\context_system::instance()->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
 
         $this->setUser($this->getDataGenerator()->create_user());
         $this->expectException(\core\exception\moodle_exception::class);

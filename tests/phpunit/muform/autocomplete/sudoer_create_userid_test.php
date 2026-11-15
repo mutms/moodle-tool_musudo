@@ -56,7 +56,7 @@ final class sudoer_create_userid_test extends \advanced_testcase {
         $this->assertSame([], $source->get_args());
         $this->assertSame(
             [(int)$manager1->id, (int)$user1->id, (int)$user2->id, (int)$user3->id],
-            array_keys($source->search('', 50))
+            array_keys($source->search('', 50, []))
         );
 
         sudoer::create((object)[
@@ -66,21 +66,26 @@ final class sudoer_create_userid_test extends \advanced_testcase {
         ]);
         $this->assertSame(
             [(int)$manager1->id, (int)$user2->id, (int)$user3->id],
-            array_keys($source->search('', 50))
+            array_keys($source->search('', 50, []))
         );
-        $this->assertNull($source->search('', 2));
+        $this->assertNull($source->search('', 2, []));
 
-        $result = $source->search('user2', 50);
+        $result = $source->search('user2', 50, []);
         $this->assertSame([(int)$user2->id], array_keys($result));
         $this->assertStringContainsString(fullname($user2), $result[$user2->id]);
         $this->assertStringContainsString($user2->email, $result[$user2->id]);
 
-        $this->assertStringContainsString(fullname($user2), $source->label((string)$user2->id));
-        $this->assertNull($source->label((string)$user1->id));
-        $this->assertNull($source->label((string)$admin2->id));
-        $this->assertNull($source->validate((string)$user2->id));
+        $value = (string)$user2->id;
+        $this->assertStringContainsString(fullname($user2), $source->labels([$value])[$value] ?? null);
+        $value = (string)$user1->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
+        $value = (string)$admin2->id;
+        $this->assertNull($source->labels([$value])[$value] ?? null);
+        $value = (string)$user2->id;
+        $this->assertNull($source->validate([$value])[$value] ?? null);
         // Suspended users are allowed, the same as in 4.5.
-        $this->assertNull($source->validate((string)$user3->id));
+        $value = (string)$user3->id;
+        $this->assertNull($source->validate([$value])[$value] ?? null);
 
         $this->setUser($manager1);
         try {
