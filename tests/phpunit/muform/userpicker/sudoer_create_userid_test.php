@@ -16,23 +16,36 @@
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 
-namespace tool_musudo\phpunit\muform\autocomplete;
+namespace tool_musudo\phpunit\muform\userpicker;
 
 use tool_musudo\local\sudoer;
-use tool_musudo\muform\autocomplete\sudoer_create_userid;
+use tool_musudo\muform\userpicker\sudoer_create_userid;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * New privileged user autocomplete source tests.
+ * New privileged user users picker source tests.
  *
  * @package     tool_musudo
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#[CoversClass(\tool_musudo\muform\autocomplete\sudoer_create_userid::class)]
+#[CoversClass(\tool_musudo\muform\userpicker\sudoer_create_userid::class)]
 #[Group('MuTMS')]
 final class sudoer_create_userid_test extends \advanced_testcase {
+    /**
+     * Users on the first page of the panel.
+     *
+     * @param \tool_mulib\muform\userpicker\base $source
+     * @param string $query
+     * @param string[] $exclude
+     * @return array user id => label html
+     */
+    private function search(\tool_mulib\muform\userpicker\base $source, string $query, array $exclude = []): array {
+        $result = $source->search($query, $exclude, 0);
+        return array_combine(array_column($result['rows'], 'id'), array_column($result['rows'], 'label'));
+    }
+
     public function test_source(): void {
         global $DB;
         $this->resetAfterTest();
@@ -56,7 +69,7 @@ final class sudoer_create_userid_test extends \advanced_testcase {
         $this->assertSame([], $source->get_args());
         $this->assertSame(
             [(int)$manager1->id, (int)$user1->id, (int)$user2->id, (int)$user3->id],
-            array_keys($source->search('', 50, []))
+            array_keys($this->search($source, ''))
         );
 
         sudoer::create((object)[
@@ -66,11 +79,11 @@ final class sudoer_create_userid_test extends \advanced_testcase {
         ]);
         $this->assertSame(
             [(int)$manager1->id, (int)$user2->id, (int)$user3->id],
-            array_keys($source->search('', 50, []))
+            array_keys($this->search($source, ''))
         );
-        $this->assertNull($source->search('', 2, []));
+        $this->assertGreaterThan(2, $source->search('', [], 0)['total']);
 
-        $result = $source->search('user2', 50, []);
+        $result = $this->search($source, 'user2');
         $this->assertSame([(int)$user2->id], array_keys($result));
         $this->assertStringContainsString(fullname($user2), $result[$user2->id]);
         $this->assertStringContainsString($user2->email, $result[$user2->id]);

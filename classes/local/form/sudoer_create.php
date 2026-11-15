@@ -18,15 +18,15 @@
 
 namespace tool_musudo\local\form;
 
-use tool_mulib\muform\element\autocomplete;
 use tool_mulib\muform\element\buttons;
 use tool_mulib\muform\element\cancel;
 use tool_mulib\muform\element\checkbox;
 use tool_mulib\muform\element\submit;
 use tool_mulib\muform\element\textarea;
+use tool_mulib\muform\element\userpicker;
 use tool_mulib\muform\form;
 use tool_musudo\local\mfa;
-use tool_musudo\muform\autocomplete\sudoer_create_userid;
+use tool_musudo\muform\userpicker\sudoer_create_userid;
 
 /**
  * Add sudo user.
@@ -40,7 +40,7 @@ final class sudoer_create extends form {
 
     #[\Override]
     protected function definition(): void {
-        $userid = new autocomplete('userid', get_string('user'), new sudoer_create_userid());
+        $userid = new userpicker('userid', get_string('user'), new sudoer_create_userid());
         $userid->set_required(true);
         $this->add($userid);
 

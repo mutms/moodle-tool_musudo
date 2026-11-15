@@ -16,10 +16,9 @@
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 
-namespace tool_musudo\muform\autocomplete;
+namespace tool_musudo\muform\userpicker;
 
 use tool_mulib\local\sql;
-use tool_mulib\muform\util\autocomplete\user_trait;
 use tool_musudo\local\util;
 
 /**
@@ -29,9 +28,7 @@ use tool_musudo\local\util;
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class sudoer_create_userid extends \tool_mulib\muform\autocomplete\base {
-    use user_trait;
-
+final class sudoer_create_userid extends \tool_mulib\muform\userpicker\base {
     /**
      * Constructor.
      */
@@ -45,26 +42,17 @@ final class sudoer_create_userid extends \tool_mulib\muform\autocomplete\base {
     }
 
     #[\Override]
-    public function search(string $query, int $maxitems, array $exclude): ?array {
-        return $this->search_users(\context_system::instance(), $query, $maxitems, [], $this->get_where());
-    }
-
-    #[\Override]
-    protected function label_value(string $value): ?string {
-        return $this->user_labels(\context_system::instance(), [$value], $this->get_where())[$value] ?? null;
-    }
-
-    #[\Override]
-    protected function validate_value(string $value): ?string {
-        return $this->validate_users([$value])[$value] ?? null;
+    protected function get_context(): \core\context {
+        return \core\context\system::instance();
     }
 
     /**
      * Admins and privileged users are not candidates.
      *
-     * @return sql
+     * @return sql|null
      */
-    private function get_where(): sql {
+    #[\Override]
+    protected function get_candidates_sql(): ?sql {
         global $CFG;
         $admins = array_map('intval', explode(',', $CFG->siteadmins));
         return new sql(
