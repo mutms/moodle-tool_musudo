@@ -17,3 +17,7 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 - privilege contexts are selected by level (system, tenant, category, course) with searchable pickers
   instead of typing numeric context ids, context ids can still be entered for other contexts
 - reports have an always visible filter bar, the standard filters form is available as Advanced filtering
+
+### Fixed
+
+- MFA factor description in sudo form displayed HTML markup as literal text
