@@ -42,7 +42,7 @@ final class sudoer_create_userid_test extends \advanced_testcase {
      * @return array user id => label html
      */
     private function search(\tool_mulib\muform\userpicker\base $source, string $query, array $exclude = []): array {
-        $result = $source->search($query, $exclude, 0);
+        $result = $source->search($query, $exclude, 0, []);
         return array_combine(array_column($result['rows'], 'id'), array_column($result['rows'], 'label'));
     }
 
@@ -81,7 +81,7 @@ final class sudoer_create_userid_test extends \advanced_testcase {
             [(int)$manager1->id, (int)$user2->id, (int)$user3->id],
             array_keys($this->search($source, ''))
         );
-        $this->assertGreaterThan(2, $source->search('', [], 0)['total']);
+        $this->assertGreaterThan(2, $source->search('', [], 0, [])['total']);
 
         $result = $this->search($source, 'user2');
         $this->assertSame([(int)$user2->id], array_keys($result));
