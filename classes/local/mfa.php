@@ -92,14 +92,18 @@ final class mfa {
 
         if ($CFG->version >= 2026032000) {
             $logintitle = get_string('logintitle', 'tool_mfa');
+            // Description is trusted HTML since Moodle 5.2.
+            $logindesc = $factor->get_login_desc();
         } else {
             $logintitle = get_string('logintitle', 'factor_' . $factorname);
+            // Description is plain text before Moodle 5.2.
+            $logindesc = s($factor->get_login_desc());
         }
 
         $header = $OUTPUT->render_from_template('tool_musudo/factorheader', [
             'factoricon' => $factor->get_icon(),
             'logintitle' => $logintitle,
-            'logindesc' => $factor->get_login_desc(),
+            'logindesc' => $logindesc,
             'disablefactor' => $disablefactor,
         ]);
         $mform->addElement('html', $header);

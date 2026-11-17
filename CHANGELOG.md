@@ -6,7 +6,9 @@ The format of this change log follows the advice given at [Keep a CHANGELOG](htt
 
 ## [Unreleased](https://github.com/mutms/moodle-tool_musudo/compare/v5.0.12.01...MOODLE_500_STABLE)
 
-- No changes
+### Fixed
+
+- MFA factor description in sudo form displayed HTML markup as literal text in Moodle 5.2
 
 ## [v5.0.12.01](https://github.com/mutms/moodle-tool_musudo/compare/v5.0.11.01...v5.0.12.01) - 2026-11-12
 
