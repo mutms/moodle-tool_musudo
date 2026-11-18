@@ -31,11 +31,11 @@
 $string['contextid'] = 'ID del contesto';
 $string['error_nosudoers'] = 'Non sono stati trovati utenti privilegiati.';
 $string['error_sudo_start'] = 'Impossibile avviare la sessione privilegiata.';
-$string['event_sudo_ended'] = 'Sessione privilegiata terminata';
-$string['event_sudo_started'] = 'Sessione privilegiata avviata';
-$string['event_sudoer_created'] = 'Utente privilegiato aggiunto';
-$string['event_sudoer_deleted'] = 'Utente privilegiato rimosso';
-$string['event_sudoer_updated'] = 'Utente privilegiato aggiornato';
+$string['event_sudo_ended'] = 'Fine della sessione privilegiata';
+$string['event_sudo_started'] = 'Avvio della sessione privilegiata';
+$string['event_sudoer_created'] = 'Aggiunta utente privilegiato';
+$string['event_sudoer_deleted'] = 'Rimozione utente privilegiato';
+$string['event_sudoer_updated'] = 'Aggiornamento utente privilegiato';
 $string['mfarequired'] = 'MFA obbligatoria';
 $string['pluginname'] = 'Sessioni privilegiate (sudo)';
 $string['privacy:metadata:tool_musudo_sudoer:mfarequired'] = 'MFA obbligatoria';
