@@ -16,7 +16,7 @@
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 
-namespace tool_musudo\muform\userpicker;
+namespace tool_musudo\picker\user;
 
 use tool_mulib\local\sql;
 use tool_musudo\local\util;
@@ -28,7 +28,7 @@ use tool_musudo\local\util;
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-final class sudoer_create_userid extends \tool_mulib\muform\userpicker\base {
+final class sudoer_create_userid extends \tool_mulib\picker\user\base {
     /**
      * Constructor.
      */

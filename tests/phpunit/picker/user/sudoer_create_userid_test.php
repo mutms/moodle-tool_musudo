@@ -16,10 +16,10 @@
 
 // phpcs:disable moodle.Files.BoilerplateComment.CommentEndedTooSoon
 
-namespace tool_musudo\phpunit\muform\userpicker;
+namespace tool_musudo\phpunit\picker\user;
 
 use tool_musudo\local\sudoer;
-use tool_musudo\muform\userpicker\sudoer_create_userid;
+use tool_musudo\picker\user\sudoer_create_userid;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -30,18 +30,18 @@ use PHPUnit\Framework\Attributes\Group;
  * @copyright   2026 Petr Skoda
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-#[CoversClass(\tool_musudo\muform\userpicker\sudoer_create_userid::class)]
+#[CoversClass(\tool_musudo\picker\user\sudoer_create_userid::class)]
 #[Group('MuTMS')]
 final class sudoer_create_userid_test extends \advanced_testcase {
     /**
      * Users on the first page of the panel.
      *
-     * @param \tool_mulib\muform\userpicker\base $source
+     * @param \tool_mulib\picker\user\base $source
      * @param string $query
      * @param string[] $exclude
      * @return array user id => label html
      */
-    private function search(\tool_mulib\muform\userpicker\base $source, string $query, array $exclude = []): array {
+    private function search(\tool_mulib\picker\user\base $source, string $query, array $exclude = []): array {
         $result = $source->search($query, $exclude, 0, []);
         return array_combine(array_column($result['rows'], 'id'), array_column($result['rows'], 'label'));
     }

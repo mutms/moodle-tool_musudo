@@ -26,7 +26,7 @@ use tool_mulib\muform\element\textarea;
 use tool_mulib\muform\element\userpicker;
 use tool_mulib\muform\form;
 use tool_musudo\local\mfa;
-use tool_musudo\muform\userpicker\sudoer_create_userid;
+use tool_musudo\picker\user\sudoer_create_userid;
 
 /**
  * Add sudo user.
