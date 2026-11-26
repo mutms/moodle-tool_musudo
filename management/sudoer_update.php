@@ -69,7 +69,7 @@ if ($form->is_cancelled()) {
 if ($data = $form->get_data()) {
     $data->id = $sudoer->id;
     sudoer::update(sudoer_update::get_privileges_data($data));
-    $handler->submitted($returnurl);
+    $handler->submitted($returnurl, ['changed' => 'rows']);
 }
 
 $handler->render($form);

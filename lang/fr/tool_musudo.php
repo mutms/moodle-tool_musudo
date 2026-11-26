@@ -29,7 +29,6 @@
  */
 
 $string['contextid'] = 'Identifiant du contexte';
-$string['error_nosudoers'] = 'Aucun utilisateur privilégié trouvé.';
 $string['error_sudo_start'] = 'Impossible de démarrer la session privilégiée.';
 $string['event_sudo_ended'] = 'Session privilégiée terminée';
 $string['event_sudo_started'] = 'Session privilégiée démarrée';
@@ -59,3 +58,4 @@ $string['sudoer_delete'] = 'Retirer l’utilisateur privilégié';
 $string['sudoer_note'] = 'Remarque';
 $string['sudoer_update'] = 'Modifier l’utilisateur privilégié';
 $string['sudoers'] = 'Utilisateurs privilégiés';
+$string['tenant'] = 'Locataire';

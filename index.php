@@ -34,6 +34,10 @@ require_once($CFG->libdir . '/adminlib.php');
 
 admin_externalpage_setup('tool_musudo_sudoers', '', null, '', ['pagelayout' => 'report', 'nosearch' => true]);
 
+$report = \tool_musudo\mureport\system_report\sudoers::make_instance();
+$report->require_access();
+$report->init_page();
+
 $buttons = [];
 
 if (is_siteadmin()) {
@@ -53,15 +57,6 @@ if ($buttons) {
 
 echo $OUTPUT->header();
 
-$report = \core_reportbuilder\system_report_factory::create(
-    \tool_musudo\reportbuilder\local\systemreports\sudoers::class,
-    context_system::instance()
-);
-echo $OUTPUT->render(new \tool_mulib\output\report_filter_bar($report, pinned: [
-    'user:fullname' => null,
-    'tenant:name' => null,
-]));
-echo $report->output();
-echo $OUTPUT->render(new \tool_mulib\output\report_pager($report));
+echo $OUTPUT->render(new \tool_mureport\output\report_full($report));
 
 echo $OUTPUT->footer();

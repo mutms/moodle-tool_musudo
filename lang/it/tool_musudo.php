@@ -25,7 +25,6 @@
  */
 
 $string['contextid'] = 'ID del contesto';
-$string['error_nosudoers'] = 'Non sono stati trovati utenti privilegiati.';
 $string['error_sudo_start'] = 'Impossibile avviare la sessione privilegiata.';
 $string['event_sudo_ended'] = 'Fine della sessione privilegiata';
 $string['event_sudo_started'] = 'Avvio della sessione privilegiata';
@@ -55,3 +54,4 @@ $string['sudoer_delete'] = 'Rimuovi utente privilegiato';
 $string['sudoer_note'] = 'Nota';
 $string['sudoer_update'] = 'Modifica utente privilegiato';
 $string['sudoers'] = 'Utenti privilegiati';
+$string['tenant'] = 'Tenant';

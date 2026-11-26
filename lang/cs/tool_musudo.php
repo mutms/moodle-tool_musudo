@@ -25,7 +25,6 @@
  */
 
 $string['contextid'] = 'ID kontextu';
-$string['error_nosudoers'] = 'Nebyli nalezeni žádní privilegovaní uživatelé.';
 $string['error_sudo_start'] = 'Privilegovanou relaci se nepodařilo zahájit.';
 $string['event_sudo_ended'] = 'Privilegovaná relace ukončena';
 $string['event_sudo_started'] = 'Privilegovaná relace zahájena';
@@ -55,3 +54,4 @@ $string['sudoer_delete'] = 'Odebrat privilegovaného uživatele';
 $string['sudoer_note'] = 'Poznámka';
 $string['sudoer_update'] = 'Upravit privilegovaného uživatele';
 $string['sudoers'] = 'Privilegovaní uživatelé';
+$string['tenant'] = 'Klient';

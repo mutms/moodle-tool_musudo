@@ -45,6 +45,7 @@ protected with existing MFA factors for additional security.
 Required plugins:
 
 * [Additional tools library plugin](https://github.com/mutms/moodle-tool_mulib)
+* [Advanced report builder plugin](https://github.com/mutms/moodle-tool_mureport)
 
 ## Documentation
 

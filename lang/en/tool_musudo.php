@@ -25,7 +25,6 @@
  */
 
 $string['contextid'] = 'Context ID';
-$string['error_nosudoers'] = 'No privileged users found.';
 $string['error_sudo_start'] = 'Could not start privileged session.';
 $string['event_sudo_ended'] = 'Privileged session ended';
 $string['event_sudo_started'] = 'Privileged session started';
@@ -55,3 +54,4 @@ $string['sudoer_delete'] = 'Remove privileged user';
 $string['sudoer_note'] = 'Note';
 $string['sudoer_update'] = 'Update privileged user';
 $string['sudoers'] = 'Privileged users';
+$string['tenant'] = 'Tenant';

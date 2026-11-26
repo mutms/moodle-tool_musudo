@@ -29,7 +29,6 @@
  */
 
 $string['contextid'] = 'Kontext-ID';
-$string['error_nosudoers'] = 'Keine privilegierten Nutzer/innen gefunden.';
 $string['error_sudo_start'] = 'Die privilegierte Sitzung konnte nicht gestartet werden.';
 $string['event_sudo_ended'] = 'Privilegierte Sitzung beendet';
 $string['event_sudo_started'] = 'Privilegierte Sitzung gestartet';
@@ -59,3 +58,4 @@ $string['sudoer_delete'] = 'Privilegierte/n Nutzer/in entfernen';
 $string['sudoer_note'] = 'Hinweis';
 $string['sudoer_update'] = 'Privilegierte/n Nutzer/in bearbeiten';
 $string['sudoers'] = 'Privilegierte Nutzer/innen';
+$string['tenant'] = 'Mandant';

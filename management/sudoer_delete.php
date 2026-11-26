@@ -62,7 +62,7 @@ if ($form->is_cancelled()) {
 
 if ($data = $form->get_data()) {
     sudoer::delete($sudoer->id);
-    $handler->submitted($returnurl);
+    $handler->submitted($returnurl, ['changed' => 'rows']);
 }
 
 $handler->render($form);
